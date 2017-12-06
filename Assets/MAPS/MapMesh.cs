@@ -64,11 +64,11 @@ namespace MAPS {
 			}
 		}
 	}
-
+	[Serializable]
 	public struct Topologies {
-		public List<Vert> vertices;
-		public List<Edge> edges;
-		public List<Triangle> triangles;
+		[SerializeField] public List<Vert> vertices;
+		[SerializeField] public List<Edge> edges;
+		[SerializeField] public List<Triangle> triangles;
 
 		public Topologies (List<Vert> vs, List<Edge> es, List<Triangle> ts){
 			vertices = vs;
@@ -77,6 +77,7 @@ namespace MAPS {
 		}
 	}
 
+	[Serializable]
 	public struct Vert {
 		public int ind;
 
@@ -85,6 +86,7 @@ namespace MAPS {
 		}
 	}
 
+	[Serializable]
 	public struct Edge {
 		public int ind1;
 		public int ind2;
@@ -101,6 +103,7 @@ namespace MAPS {
 		}
 	}
 
+	[Serializable]
 	public struct Triangle {
 		public int ind1;
 		public int ind2;

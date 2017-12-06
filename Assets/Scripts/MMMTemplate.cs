@@ -14,7 +14,7 @@ namespace MMM {
 		#region Private members
 		[SerializeField] Mesh _sourceMesh;
 		[SerializeField] Mesh _targetMesh;
-		[SerializeField] public MapsMesh _sourceBaseMesh;
+		[SerializeField] MapsMesh _sourceBaseMesh;
 		[SerializeField] MapsMesh _targetBaseMesh;
 		[SerializeField] Mesh _laycastMesh;
 
@@ -26,11 +26,20 @@ namespace MMM {
 
 		#region Public methods
 		public void debugLog(){
+			/* 
 			Debug.LogFormat("fps:{0}", fps.Count);
 			Debug.LogFormat("valid:{0}", fps.Where(p => p != -1).ToArray().Count());
 
 			Debug.LogFormat("fpt:{0}", fpt.Count);
 			Debug.LogFormat("valid:{0}", fpt.Where(p => p != -1).ToArray().Count());
+
+			GameObject go = new GameObject();
+			go.name = "test";
+		 	MeshFilter mf = go.AddComponent<MeshFilter>();
+			Debug.Log(_targetBaseMesh);
+			mf.sharedMesh = RemeshUtility.rebuiltMesh(ref _targetBaseMesh);
+			MeshRenderer mr = go.AddComponent<MeshRenderer>();
+			*/
 		}
 
 		public void build(){
@@ -141,9 +150,8 @@ namespace MMM {
 		}
 
 		void calclateCompose(){
-
+			
 		}
-
 		#endregion
 	}
 }
