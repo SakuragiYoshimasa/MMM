@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace MAPS{
 	public struct QuadEdge {
 		Edge orgdest;
 		Edge onext;
@@ -56,3 +57,4 @@ using UnityEngine;
 			}
 		}
 	}
+}

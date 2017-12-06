@@ -6,7 +6,7 @@ using System.Linq;
 //Referenced MAPS: Multiresolution adaptive parameterization of surfaces.
 //Easy implementation
 //I haven't impelemnted smoothing and feature edges yet.
-
+namespace MAPS {
 public class MAPS : MonoBehaviour {
 
 	public Mesh mesh;
@@ -231,4 +231,5 @@ public class MAPS : MonoBehaviour {
 		}
 		#endif
 	}*/
+}
 }
