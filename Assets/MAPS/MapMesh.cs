@@ -9,12 +9,12 @@ namespace MAPS {
 	//K is a toopology. Now I implemented not using edge information.
 	//feature points are selected randomly. TODO: It should be seleced to share between two meshes.
 	//bijection phai(K^L) -> phai(K^l). If it is null, it mean identity.
-
-	public class MapsMesh {
-		public List<Vector3> P;
-		public Topologies K;
-		public List<int> featurePoints;
-		public List<Dictionary<int, float>> bijection;
+	[Serializable]
+	public class MapsMesh  {
+		[SerializeField] public List<Vector3> P;
+		[SerializeField] public Topologies K;
+		[SerializeField] public List<int> featurePoints;
+		[SerializeField] public List<Dictionary<int, float>> bijection;
 
 		public MapsMesh (List<Vector3> ps, Topologies topo, List<int> fps){
 			P = ps;

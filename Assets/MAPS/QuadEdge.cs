@@ -14,40 +14,12 @@ namespace MAPS{
 			this.dprev = dprev;
 		}
 
-		public bool contain(int ind){
-			return ind == orgdest.ind1 || ind == orgdest.ind2;
-		}
-
-		public Edge e{
-			get{
-				return orgdest;
-			}
-		}
-
-		public Vert Org{
-			get {
-				return new Vert(orgdest.ind1);
-			}
-		}
-
-		public Vert Dest{
-			get {
-				return new Vert(orgdest.ind2);
-			}
-		}
-
-		public Edge Onext{
-			get {
-				return onext;
-			}
-		}
-
-		public Edge Dprev{
-			get {
-				return dprev;
-			}
-		}
-		
+		public bool contain(int ind){ return ind == orgdest.ind1 || ind == orgdest.ind2; }
+		public Edge e { get{ return orgdest; } }
+		public Vert Org{ get { return new Vert(orgdest.ind1); } }
+		public Vert Dest{ get { return new Vert(orgdest.ind2); } }
+		public Edge Onext{ get { return onext; } }
+		public Edge Dprev{ get { return dprev; } }
 		public QuadEdge sym{
 			get{ 
 				Edge od = new Edge(orgdest.ind2, orgdest.ind1);
