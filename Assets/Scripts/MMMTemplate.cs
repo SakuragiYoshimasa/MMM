@@ -9,7 +9,7 @@ namespace MMM {
 	public class MMMTemplate : ScriptableObject {
 
 		#region Public properties
-
+		
 		#endregion
 
 		#region Private members
@@ -23,6 +23,9 @@ namespace MMM {
 		[SerializeField] Mesh _transformedSourceMesh;
 		[SerializeField] List<int> fps;
 		[SerializeField] List<int> fpt;
+		[SerializeField] Mesh debugMesh;
+		[SerializeField] GameObject debugObject;
+		[SerializeField] Material debugMat;
 		#endregion
 
 		#region Public methods
@@ -42,6 +45,19 @@ namespace MMM {
 			MeshRenderer mr = go.AddComponent<MeshRenderer>();
 			*/
 			Debug.LogFormat("Remain:{0}", _sourceBaseMesh.K.vertices.Count);
+		}
+
+		public GameObject getPreviewObject(){
+			if(debugObject == null){ 
+				debugObject = new GameObject(); 
+				debugObject.AddComponent<MeshFilter>();
+				debugObject.AddComponent<MeshRenderer>();
+			}
+			debugObject.GetComponent<MeshFilter>().sharedMesh = RemeshUtility.rebuiltMesh(ref _targetBaseMesh);
+			if(debugMat != null){
+				debugObject.GetComponent<MeshRenderer>().material = debugMat;
+			}
+			return debugObject;
 		}
 
 		public void build(){
@@ -64,7 +80,7 @@ namespace MMM {
 			Debug.Log("Source maps done");
 			_targetBaseMesh = targetMaps.generateBaseDomain(_targetMesh, fpt);
 			Debug.Log("Target maps done");
-			generateTransformedSourceMesh();
+			//generateTransformedSourceMesh();
 		}
 
 		public Texture getPreviewAsset(){
@@ -210,7 +226,7 @@ namespace MMM {
 						closestTriangleIndex = j;
 					}
 				}
-
+				Debug.Log(closestTriangleIndex);
 				//Finally, update dict by minimum distance triangle and its barycentric coordinate of projected point.
 				Triangle closestTriangle = _targetBaseMesh.K.triangles[closestTriangleIndex];
 				Vector3 _p1 = _targetBaseMesh.P[closestTriangle.ind1];
@@ -232,8 +248,44 @@ namespace MMM {
 			//------------------------------------------------------
 			//Where does projected points on.
 			//In other words, calculate where projected points on the original target mesh.
-			
+			_transformedSourceMesh = new Mesh();
 
+
+			//最初にM0を適用した点を算出 (S0)
+			//Key is a index of verts.
+			Dictionary<int, Vector3> projectedBaseDomainPoints = new Dictionary<int, Vector3>(); 
+			for(int i = 0; i < _sourceBaseMesh.K.vertices.Count; i++){
+				Vector3 p = Vector3.zero;
+
+				foreach(KeyValuePair<int, float> kv in M0[_sourceBaseMesh.K.vertices[i].ind]){
+					p += kv.Value * _targetBaseMesh.P[kv.Key];
+				}
+				projectedBaseDomainPoints.Add(_sourceBaseMesh.K.vertices[i].ind, p);
+			}
+
+			//Adapt bijection of S
+			List<Vector3> projectedToTargetBaseOfSourcePoints = new List<Vector3>();
+			for(int i = 0; i < _sourceMesh.vertexCount; i++){ 
+				
+				Vector3 p = Vector3.zero;
+				foreach(KeyValuePair<int, float> kv in _sourceBaseMesh.bijection[i]){
+					p += kv.Value * projectedBaseDomainPoints[kv.Key];
+				}
+				projectedToTargetBaseOfSourcePoints.Add(p);
+			}
+			_transformedSourceMesh.vertices = projectedToTargetBaseOfSourcePoints.ToArray();
+			_transformedSourceMesh.triangles = _sourceMesh.triangles;
+			debugMesh = _transformedSourceMesh;
+			
+			//Adapt inverse bijection of T
+			//Solve point location problem
+			
+			//Case 1: the projected triangle is still on a triangle in the target base domain.
+			//-> Solve the point location problem in a triangle on the target base domain.
+
+
+			//Case 2: the projected triangle is not on a triangle in the target base domain.
+			//-> 
 
 
 		}
