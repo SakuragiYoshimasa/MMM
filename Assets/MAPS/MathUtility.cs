@@ -48,5 +48,9 @@ namespace MAPS{
 		public static float calcArea(Vector2 a, Vector2 b){
 			return Mathf.Sqrt(Mathf.Pow(a.magnitude, 2.0f) * Mathf.Pow(b.magnitude, 2.0f) - Mathf.Pow(Vector3.Dot(a, b), 2.0f)) * 0.5f;
 		}
+
+		public static float calcArea(Vector3 a, Vector3 b){
+			return Mathf.Sqrt(Mathf.Pow(a.magnitude, 2.0f) * Mathf.Pow(b.magnitude, 2.0f) - Mathf.Pow(Vector3.Dot(a, b), 2.0f)) * 0.5f;
+		}
 	}
 }

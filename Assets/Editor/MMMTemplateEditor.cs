@@ -81,5 +81,18 @@ namespace MMM{
             Selection.activeObject = asset;
         }
 
+		public override bool HasPreviewGUI(){
+			return true;
+		}
+
+		public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+                
+            if (_sourceMesh != null) {
+                var texture = ((MMMTemplate)target).getPreviewAsset();
+            	EditorGUI.DrawTextureTransparent(r, texture, ScaleMode.ScaleToFit);
+            } else{                
+				OnInteractivePreviewGUI(r, background);
+			}
+		}
 	}
 }
